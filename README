@@ -1,0 +1,9 @@
+Convert reddit HTML content to text
+
+I use this in conjunction with a text-to-speach engine.
+
+curl 'https://www.reddit.com/r/rust/comments/3cl12r/is_rust_too_complicated/' | reddit2text
+cat /tmp/saved.html | reddit2text
+reddit2text /tmp/saved.html
+
+Reddit and hackernews have a pocket export link, so those couple of script aren't that usefull anymore

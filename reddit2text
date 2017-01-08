@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'nokogiri'
+
+content = ARGF.read
+n = Nokogiri::HTML(content)
+
+lines = []
+found_title = false
+i = 0
+n.xpath("//p").each_with_index do |p|
+  if p.attributes['class']&.value == 'title'
+    found_title = true
+  end
+  next if !found_title
+
+  text = p.text
+  #next if text.empty?
+
+  if text.start_with?('[–]')
+    text = text.split(/\W/).find { |elem| !elem.empty?  }
+  end
+
+  if p.parent.name == 'blockquote' && !lines[i-1].start_with?('Quote')
+    text = "Quote: #{text}"
+  end
+
+  lines << text
+  i += 1
+end
+
+puts lines

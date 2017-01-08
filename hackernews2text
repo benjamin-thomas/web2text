@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'nokogiri'
+
+content = ARGF.read
+n = Nokogiri::HTML(content)
+
+lines = []
+i = 0
+story = n.xpath('//a[@class="storylink"]')[0].text
+lines << story
+
+n.xpath('//td[@class="default"]').each_with_index do |td|
+  text = td.text
+  lines << text
+end
+
+puts lines
